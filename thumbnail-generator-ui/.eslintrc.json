@@ -1,0 +1,5 @@
+{
+  "extends": ["prettier"],
+  "plugins": ["prettier", "react", "react-hooks", "flowtype", "import", "jest", "jsx-a11y"],
+  "parser": "babel-eslint"
+}
