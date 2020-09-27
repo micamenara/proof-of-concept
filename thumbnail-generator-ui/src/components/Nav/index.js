@@ -10,7 +10,7 @@ export default function Nav() {
     {
       icon: Iimage,
       label: 'Storage',
-      selected: true
+      selected: true,
     },
     { icon: Isettings, label: 'Settings' },
   ];

@@ -6,7 +6,6 @@ export default function FilesSection() {
   return (
     <Section>
       <div className='files'>
-
         <UploadFile />
       </div>
     </Section>

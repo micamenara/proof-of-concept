@@ -10,5 +10,5 @@ export const Theme = {
   },
   sizes: {
     navWidth: '16.5rem',
-  }
-}
+  },
+};

@@ -8,8 +8,8 @@ export default function Iupload(props) {
       xmlns='http://www.w3.org/2000/svg'
       x='0px'
       y='0px'
-			viewBox='0 0 512 512'
-			{...props}
+      viewBox='0 0 512 512'
+      {...props}
     >
       <g>
         <g>
