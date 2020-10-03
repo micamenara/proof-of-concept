@@ -1,35 +1,44 @@
 import React from 'react';
-import styled, { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider, css } from 'styled-components';
 import './App.css';
 import FilesSection from './components/FilesSection';
 import Nav from './components/Nav';
+import Footer from './components/Footer';
 import { Theme } from './styles/Theme';
 
 function App() {
   return (
     <ThemeProvider theme={Theme}>
-      <div className='App'>
+      <MainContent>
         <Nav />
-        {/* Icons made by
-        <a href='https://www.flaticon.com/authors/freepik' title='Freepik'>
-          Freepik
-        </a>
-        from
-        <a href='https://www.flaticon.com/' title='Flaticon'>
-          www.flaticon.com
-        </a> */}
         <Content>
           <FilesSection />
         </Content>
-      </div>
+      </MainContent>
+      <Footer />
     </ThemeProvider>
   );
 }
 
 export default App;
 
+const MainContent = styled.div`
+  display: flex;
+  min-height: calc(100vh - ${({ theme }) => theme.sizes.footerHeight});
+
+  ${({ theme }) => css`
+    @media (max-width: ${theme.breakpoint.md}) {
+      flex-direction: column;
+    }
+  `};
+`;
+
 const Content = styled.div`
-  height: 100vh;
+  display: flex;
   width: calc(100vw - ${({ theme }) => theme.sizes.navWidth});
-  margin-left: ${({ theme }) => theme.sizes.navWidth};
+  ${({ theme }) => css`
+    @media (max-width: ${theme.breakpoint.md}) {
+      width: 100%;
+    }
+  `};
 `;

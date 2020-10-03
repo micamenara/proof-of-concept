@@ -8,12 +8,18 @@ export const Theme = {
     gray3: '#988dab21',
     gray4: '#cccccc',
     white: '#ffffff',
+    success: '#4CAF50',
+    successLight: '#4caf502e',
+    error: '#f44336',
+    errorLight: '#f4433629',
   },
   sizes: {
-    navWidth: '16.5rem',
+    navWidth: '264px',
+    footerHeight: '64px',
   },
   icons: {
     sm: '16px',
+    lg: '64px'
   },
   spacing: {
     sm: '8px',
@@ -24,5 +30,12 @@ export const Theme = {
     sm: '4px',
     md: '20px',
     lg: '45px',
+  },
+  breakpoint: {
+    xxs: '320px',
+    xs: '425px',
+    sm: '576px',
+    md: '768px',
+    lg: '992px',
   },
 };

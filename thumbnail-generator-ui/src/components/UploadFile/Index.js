@@ -1,22 +1,20 @@
 import React, { useState } from 'react';
-import styled, { useTheme, keyframes } from 'styled-components';
+import styled, { useTheme, keyframes, css } from 'styled-components';
+import { Text } from '../../constants';
 import Button from '../Button';
 import FileButton from '../FileButton';
 import IcloudComputing from '../Icons/IcloudComputing';
-import Itrash from '../Icons/Itrash';
 import Ilink from '../Icons/link';
 import Input from '../Input';
 
 export default function UploadFile({ onFile }) {
   const [isDragging, setIsDragging] = useState('');
   const [showInput, setShowInput] = useState(false);
-  const [hasImage, setHasImage] = useState(false);
   const [inputValue, setInputValue] = useState('');
   const theme = useTheme();
 
   const handleFile = (file) => {
     setInputValue('');
-    setHasImage(true);
     onFile(file);
   };
 
@@ -32,13 +30,8 @@ export default function UploadFile({ onFile }) {
     handleFile(imageFile);
   };
 
-  const handleDragEnter = (event) => {
+  const handleDragEnter = () => {
     setIsDragging(true);
-  };
-
-  const clear = () => {
-    setHasImage(false);
-    onFile(null);
   };
 
   const getImageFromURL = (url) => {
@@ -51,31 +44,16 @@ export default function UploadFile({ onFile }) {
 
   return (
     <UploadSection>
-      <TopSection>
-        <h2>Files</h2>
-        <Actions>
-          {hasImage ? (
-            <Button onClick={() => clear()} variant='outline'>
-              <Itrash fill={theme.colors.primary} width={theme.icons.sm} />
-              Clear
-            </Button>
-          ) : (
-            <>
-              <FileButton
-                accept='image/png, image/jpeg'
-                onChange={(e) => handleFile(e.target.files[0])}
-              >
-                Upload Files
-              </FileButton>
-              <Button onClick={() => setShowInput(true)} variant='outline'>
-                <Ilink fill={theme.colors.primary} width={theme.icons.sm} />
-                From URL
-              </Button>
-            </>
-          )}
-        </Actions>
-      </TopSection>
-      {showInput && !hasImage && (
+      <Actions>
+        <FileButton accept='image/png, image/jpeg' onChange={(e) => handleFile(e.target.files[0])}>
+          {Text.uploadFile.upload}
+        </FileButton>
+        <Button onClick={() => setShowInput(true)} variant='outline'>
+          <Ilink fill={theme.colors.primary} width={theme.icons.sm} />
+          {Text.uploadFile.fromUrl}
+        </Button>
+      </Actions>
+      {showInput && (
         <FromUrlSection>
           <Input
             type='text'
@@ -83,60 +61,67 @@ export default function UploadFile({ onFile }) {
             value={inputValue}
             onChange={(e) => setInputValue(e.currentTarget.value)}
           />
-          <Button onClick={() => getImageFromURL(inputValue)}>Preview</Button>
+          <Button
+            onClick={() => getImageFromURL(inputValue)}
+            disabled={!(inputValue && inputValue.length)}
+          >
+            {Text.uploadFile.getUrlImage}
+          </Button>
         </FromUrlSection>
       )}
-      {!hasImage && (
-        <div
-          className='drop_zone'
-          onDragEnter={handleDragEnter}
-          onDragOver={handleOndragOver}
-          onDrop={handleOndrop}
-        >
-          {isDragging ? (
-            <Icon>
-              <IcloudComputing fill={theme.colors.primary} height='70px' />
-            </Icon>
-          ) : (
-            <p>Drag and drop image here....</p>
-          )}
-        </div>
-      )}
+      <DragZone onDragEnter={handleDragEnter} onDragOver={handleOndragOver} onDrop={handleOndrop}>
+        {isDragging ? (
+          <Icon>
+            <IcloudComputing fill={theme.colors.primary} height='70px' />
+          </Icon>
+        ) : (
+          <p>{Text.uploadFile.dragImages}</p>
+        )}
+      </DragZone>
     </UploadSection>
   );
 }
 
 const UploadSection = styled.div`
-  padding: 20px;
   display: flex;
   flex-direction: column;
+  padding: ${({ theme }) => theme.spacing.md};
+  flex: 1;
+`;
 
-  .drop_zone {
-    display: flex;
-    flex: 1;
-    position: absolute;
-    width: ${({ theme }) => `calc(100% - (${theme.spacing.md} * 3))`};
-    bottom: ${({ theme }) => `calc(${theme.spacing.md} * 2)`};
-    height: calc(100% - 150px);
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    border: 2px dashed ${({ theme }) => theme.colors.gray4};
-    border-radius: ${({ theme }) => theme.borderRadius.lg};
-  }
-  .drop_zone > p {
+const DragZone = styled.div`
+  display: flex;
+  flex: 1;
+  margin-top: ${({ theme }) => theme.spacing.md};
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  border: 2px dashed ${({ theme }) => theme.colors.gray4};
+  border-radius: ${({ theme }) => theme.borderRadius.lg};
+  > p {
     color: ${({ theme }) => theme.colors.gray1};
   }
-  .image {
-    width: 200px;
-    height: 200px;
-    border-radius: ${({ theme }) => theme.borderRadius.sm};
-    display: inline-block;
-  }
+  ${({ theme }) => css`
+    @media (max-width: ${theme.breakpoint.md}) {
+      display: none;
+    }
+  `};
 `;
 
 const Actions = styled.div`
   display: flex;
+  justify-content: flex-end;
+  width: 100%;
+  ${({ theme }) => css`
+    @media (max-width: ${theme.breakpoint.md}) {
+      flex-direction: column;
+      button {
+        width: 100%;
+        margin-top: ${({ theme }) => theme.spacing.md};
+      }
+    }
+  `};
 `;
 
 const FromUrlSection = styled.div`
@@ -167,14 +152,4 @@ const Icon = styled.div`
   display: flex;
   background-color: ${({ theme }) => theme.colors.primaryLight};
   animation: ${backgroundColorAnimation} 2s infinite linear;
-`;
-
-const TopSection = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: ${({ theme }) => `${theme.spacing.md} 0px`};
-  > h2 {
-    margin: 0;
-  }
 `;

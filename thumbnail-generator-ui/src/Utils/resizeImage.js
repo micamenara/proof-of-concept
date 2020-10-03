@@ -1,10 +1,5 @@
-/*
--------------------------------
--------RESIZING FUNCTION-------
--------------------------------
-*/
-
-export default function resizeImg(img, maxWidth, maxHeight, degrees) {
+export default function resizeImg(img, maxWidth, maxHeight) {
+  const degrees = 0;
   let imgWidth = img.width,
     imgHeight = img.height;
 
