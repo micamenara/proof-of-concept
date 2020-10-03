@@ -41,11 +41,13 @@ const StyledButton = styled.button`
     css`
       color: ${theme.colors.primary};
       background-color: transparent;
-      
-      &:active, &:hover {
+
+      &:active,
+      &:hover {
         color: ${theme.colors.primaryDark};
       }
-      &:active, &:hover > svg {
+      &:active,
+      &:hover > svg {
         fill: ${theme.colors.primaryDark};
       }
     `}

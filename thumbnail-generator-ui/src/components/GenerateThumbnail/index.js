@@ -24,7 +24,7 @@ export default function GenerateThumbnail({ file }) {
   };
   return file ? (
     <Section>
-      <img alt='thumbnail' src={fileUrl}/>
+      <img alt='thumbnail' src={fileUrl} />
       <p>200x200</p>
       <Button onClick={() => handleImage()} type='button'>
         Download
