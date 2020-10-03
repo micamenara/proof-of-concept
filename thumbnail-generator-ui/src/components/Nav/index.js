@@ -9,7 +9,7 @@ export default function Nav() {
   const navItems = [
     {
       icon: Iimage,
-      label: 'Storage',
+      label: 'Images',
       selected: true,
     },
     { icon: Isettings, label: 'Settings' },
@@ -22,7 +22,7 @@ export default function Nav() {
     <StyledNav>
       <SiteName>
         <Icloud height='32px' fill={theme.colors.white} />
-        <h2>My Cloud</h2>
+        <h2>Thumbnail</h2>
       </SiteName>
       <NavList>
         {navItems.map((item) => (
@@ -80,7 +80,7 @@ const SiteName = styled.div`
   > svg {
     background: ${({ theme }) => theme.colors.primary};
     padding: 5px;
-    border-radius: 5px;
+    border-radius: ${({ theme }) => theme.borderRadius.sm};
     margin-right: 7px;
   }
 `;

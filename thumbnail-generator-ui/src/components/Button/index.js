@@ -17,16 +17,10 @@ const StyledButton = styled.button`
   border: none;
   transition: all 0.3s ease;
   padding: 10px 16px;
-  border-radius: 20px;
+  border-radius: ${({ theme }) => theme.borderRadius.md};
   outline: 0px;
+  transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
 
-  &:hover {
-    box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14),
-      0px 3px 14px 2px rgba(0, 0, 0, 0.12);
-  }
-  &:active {
-    transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
-  }
   /* Primary */
   ${({ theme, variant }) =>
     variant === 'primary' &&
@@ -36,5 +30,27 @@ const StyledButton = styled.button`
       &:active {
         background-color: ${theme.colors.primaryDark};
       }
+      &:hover {
+        box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14),
+          0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+      }
     `}
+  /* Outline */
+  ${({ theme, variant }) =>
+    variant === 'outline' &&
+    css`
+      color: ${theme.colors.primary};
+      background-color: transparent;
+      
+      &:active, &:hover {
+        color: ${theme.colors.primaryDark};
+      }
+      &:active, &:hover > svg {
+        fill: ${theme.colors.primaryDark};
+      }
+    `}
+
+  > svg {
+    margin-right: 8px;
+  }
 `;
