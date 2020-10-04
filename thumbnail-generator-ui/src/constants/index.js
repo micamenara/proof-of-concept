@@ -22,6 +22,10 @@ export const Text = {
     title: 'Files',
   },
 };
+export const Testing = {
+  imageUrl:
+    'https://images.unsplash.com/photo-1560114928-40f1f1eb26a0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80',
+};
 
 export const ImageSizes = [
   { width: 400, height: 300, label: '400x300' },

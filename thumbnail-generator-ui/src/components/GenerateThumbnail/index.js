@@ -10,6 +10,7 @@ import Isad from '../Icons/Isad';
 import Note from '../Note';
 import { Text, ImageSizes } from '../../constants';
 import getResizedImage from '../../api/getResizedImage';
+import Idownload from '../Icons/Idownload';
 
 export default function GenerateThumbnail({ file, onReturn }) {
   const [fileUrl, setFileUrl] = useState(null);
@@ -64,9 +65,10 @@ export default function GenerateThumbnail({ file, onReturn }) {
           <Images>
             {ImageSizes.map((item, idx) => (
               <ImageData key={idx}>
-                <img alt='thumbnail' src={croppedFile} width={item.width} height={item.height} />
+                <img alt={`thumbnail-${item.label}`} src={croppedFile} width={item.width} height={item.height} />
                 <p>{item.label}</p>
                 <Button onClick={() => handleImage(item.width, item.height)} type='button'>
+                  <Idownload fill={theme.colors.white} width={theme.icons.sm} />
                   {Text.generateThumbnail.download} {item.label}
                 </Button>
               </ImageData>
@@ -79,7 +81,7 @@ export default function GenerateThumbnail({ file, onReturn }) {
                 <h4>Images successfully generated!</h4>
                 <div className='note-content__subtitle'>
                   <p>
-                    Thank you for using Thumbnail, to continue editing a new picture click here.
+                    Thank you for using Thumbnail, to continue editing a new image click here.
                   </p>
                   <Button onClick={() => onReturn()} variant='outlineSecondary'>
                     New image

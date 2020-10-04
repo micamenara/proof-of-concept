@@ -58,6 +58,7 @@ export default function UploadFile({ onFile }) {
         <FromUrlSection>
           <Input
             type='text'
+            name='image-url'
             placeholder='http://'
             value={inputValue}
             onChange={(e) => setInputValue(e.currentTarget.value)}
