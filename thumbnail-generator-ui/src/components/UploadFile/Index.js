@@ -162,4 +162,4 @@ const DragImage = styled.div`
   > p {
     color: ${({ theme }) => theme.colors.gray1};
   }
-`
+`;
