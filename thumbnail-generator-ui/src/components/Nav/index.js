@@ -3,17 +3,20 @@ import styled, { useTheme, css } from 'styled-components';
 import { Text } from '../../constants';
 import Icloud from '../Icons/Icloud';
 import Imenu from '../Icons/Imenu';
+import Icancel from '../Icons/Icancel';
 import Isettings from '../Icons/Isettings';
 import LoginButton from '../LoginButton';
 import LogoutButton from '../LogoutButton';
 import Profile from '../Profile';
 import Iimage from './../Icons/Iimage';
+import { Link, useLocation } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 
 export default function Nav() {
   const theme = useTheme();
   const [opened, setOpened] = useState(false);
   const ref = useRef(null);
+  const location = useLocation().pathname;
   const { user, isAuthenticated } = useAuth0();
 
   useEffect(() => {
@@ -34,19 +37,24 @@ export default function Nav() {
     {
       icon: Iimage,
       label: Text.nav.images,
-      selected: true,
+      to: '/',
+      userLogged: false,
     },
-    { icon: Isettings, label: Text.nav.settings },
+    { icon: Isettings, label: Text.nav.user, to: '/profile', userLogged: true },
   ];
   const getIcon = (icon) => {
     const Icon = icon;
-    return <Icon height='24px' fill={theme.colors.gray1} />;
+    return <Icon height={theme.icons.md} fill={theme.colors.gray1} />;
   };
   return (
     <StyledNav>
       <SiteName>
         <Menu onClick={() => setOpened(!opened)}>
-          <Imenu height='24px' width='24px' fill={theme.colors.black} />
+          {opened ? (
+            <Icancel height={theme.icons.md} width={theme.icons.md} fill={theme.colors.black} />
+          ) : (
+            <Imenu height={theme.icons.md} width={theme.icons.md} fill={theme.colors.black} />
+          )}
         </Menu>
         <SiteLogo>
           <h2>{Text.general.siteTitle}</h2>
@@ -56,15 +64,20 @@ export default function Nav() {
 
       <NavContent opened={opened} ref={ref}>
         <NavList>
-          {navItems.map((item) => (
-            <li key={item.label} className={item.selected ? 'current' : ''}>
-              {getIcon(item.icon)}
-              {item.label}
-            </li>
-          ))}
+          {navItems.map(
+            (item) =>
+              (!item.userLogged || isAuthenticated) && (
+                <Link to={item.to} key={item.label} onClick={() => setOpened(false)}>
+                  <li className={item.to === location ? 'current' : ''}>
+                    {getIcon(item.icon)}
+                    {item.label}
+                  </li>
+                </Link>
+              ),
+          )}
         </NavList>
 
-        <Account>
+        <Account onClick={() => setOpened(false)}>
           {isAuthenticated ? (
             <UserData>
               <Profile user={user} />
@@ -94,7 +107,7 @@ const StyledNav = styled.div`
   ${({ theme }) => css`
     @media (max-width: ${theme.breakpoint.md}) {
       height: auto;
-      position: sticky;
+      position: realtive;
       width: 100%;
       box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14);
     }
@@ -105,28 +118,32 @@ const NavList = styled.ul`
   list-style: none;
   padding: 0;
   margin: 0;
-  > li {
+  li {
     color: ${({ theme }) => theme.colors.gray1};
     padding: ${({ theme }) => theme.spacing.md};
     display: flex;
     align-items: center;
     margin: 12px 0px;
   }
-  > li.current {
+  li.current {
     color: ${({ theme }) => theme.colors.primary};
     background: ${({ theme }) => theme.colors.primaryLight};
   }
-  > li.current > svg {
+  li.current > svg {
     fill: ${({ theme }) => theme.colors.primary};
   }
-  > li > svg {
+  li > svg {
     padding-right: ${({ theme }) => theme.spacing.md};
+  }
+  a {
+    text-decoration: none;
   }
 `;
 
 const SiteName = styled.div`
   display: flex;
   align-items: center;
+  position: realtive;
 `;
 
 const SiteLogo = styled.div`
@@ -161,11 +178,24 @@ const NavContent = styled.div`
   display: flex;
   flex: 1;
   flex-direction: column;
-  ${({ theme, opened }) => css`
+  ${({ theme }) => css`
     @media (max-width: ${theme.breakpoint.md}) {
-      display: ${opened ? 'block' : 'none'};
+      display: none;
+      position: absolute;
+      width: 100vw;
+      background: white;
+      z-index: 1;
+      top: ${theme.sizes.navHeightMobile};
+      box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14);
     }
   `};
+  ${({ opened, theme }) =>
+    opened &&
+    css`
+      @media (max-width: ${theme.breakpoint.md}) {
+        display: block;
+      }
+    `};
 `;
 
 const Account = styled.div`

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled, { useTheme, keyframes, css } from 'styled-components';
-import { Text } from '../../constants';
+import { imageSettings, Text } from '../../constants';
+import validateImage from '../../Utils/validateImage';
 import Button from '../Button';
 import FileButton from '../FileButton';
 import IcloudComputing from '../Icons/IcloudComputing';
@@ -12,11 +13,18 @@ export default function UploadFile({ onFile }) {
   const [isDragging, setIsDragging] = useState('');
   const [showInput, setShowInput] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  const [showError, setShowError] = useState('');
   const theme = useTheme();
 
   const handleFile = (file) => {
-    setInputValue('');
-    onFile(file);
+    const isValid = validateImage(file);
+    if (isValid) {
+      setInputValue('');
+      onFile(file);
+      setShowError(false);
+    } else {
+      setShowError(true);
+    }
   };
 
   const handleOndragOver = (event) => {
@@ -46,7 +54,7 @@ export default function UploadFile({ onFile }) {
   return (
     <UploadSection>
       <Actions>
-        <FileButton accept='image/png, image/jpeg' onChange={(e) => handleFile(e.target.files[0])}>
+        <FileButton accept={imageSettings.allowedTypes.join(',')} onChange={(e) => handleFile(e.target.files[0])}>
           {Text.uploadFile.upload}
         </FileButton>
         <Button onClick={() => setShowInput(true)} variant='outline'>
@@ -71,6 +79,7 @@ export default function UploadFile({ onFile }) {
           </Button>
         </FromUrlSection>
       )}
+      {showError && <Error>{Text.uploadFile.errorMessage}</Error>}
       <DragZone onDragEnter={handleDragEnter} onDragOver={handleOndragOver} onDrop={handleOndrop}>
         {isDragging ? (
           <Icon>
@@ -163,4 +172,8 @@ const DragImage = styled.div`
   > p {
     color: ${({ theme }) => theme.colors.gray1};
   }
+`;
+
+const Error = styled.label`
+  color: ${({ theme }) => theme.colors.error};
 `;

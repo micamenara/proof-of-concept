@@ -17,9 +17,11 @@ export const Theme = {
   sizes: {
     navWidth: '264px',
     footerHeight: '64px',
+    navHeightMobile: '56px',
   },
   icons: {
     sm: '16px',
+    md: '24px',
     lg: '64px',
   },
   spacing: {

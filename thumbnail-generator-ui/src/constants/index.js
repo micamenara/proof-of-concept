@@ -4,7 +4,7 @@ export const Text = {
   },
   nav: {
     images: 'Images',
-    settings: 'Settings',
+    user: 'My account',
   },
   uploadFile: {
     clear: 'Clear',
@@ -12,6 +12,7 @@ export const Text = {
     fromUrl: 'From URL',
     dragImages: 'Drag and drop image here...',
     getUrlImage: 'Done',
+    errorMessage: 'There was a problem with your file. Allowed types: jpeg & png. File max size 5mb.'
   },
   generateThumbnail: {
     return: 'Return',
@@ -22,6 +23,7 @@ export const Text = {
     title: 'Files',
   },
 };
+
 export const Testing = {
   imageUrl:
     'https://images.unsplash.com/photo-1560114928-40f1f1eb26a0?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=80',
@@ -32,3 +34,8 @@ export const ImageSizes = [
   { width: 160, height: 120, label: '160x120' },
   { width: 120, height: 120, label: '120x120' },
 ];
+
+export const imageSettings = {
+  maxSize: 5000000, // 5mb in bytes
+  allowedTypes: ['image/png', 'image/jpeg'],
+};

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styled, { useTheme, css } from 'styled-components';
-import Button from '../Button';
-import GenerateThumbnail from '../GenerateThumbnail';
-import UploadFile from '../UploadFile/Index';
-import Itrash from '../Icons/Itrash';
+import Button from '../../components/Button';
+import GenerateThumbnail from '../../components/GenerateThumbnail';
+import UploadFile from '../../components/UploadFile';
+import Itrash from '../../components/Icons/Itrash';
 import { Text } from '../../constants';
 
 export default function FilesSection() {

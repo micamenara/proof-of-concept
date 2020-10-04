@@ -6,7 +6,14 @@ export default function LoginButton({ children, ...props }) {
   const { loginWithRedirect } = useAuth0();
 
   return (
-    <Button onClick={() => loginWithRedirect()} {...props}>
+    <Button
+      onClick={() =>
+        loginWithRedirect({
+          screen_hint: 'signup',
+        })
+      }
+      {...props}
+    >
       {children}
     </Button>
   );
