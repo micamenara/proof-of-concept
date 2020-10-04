@@ -29,7 +29,7 @@ function App() {
                   }
                 />
               ) : (
-                <Redirect to='/' key='redirect'/>
+                <Redirect to='/' key='redirect' />
               ),
             )}
           </Content>

@@ -12,7 +12,7 @@ const routes = [
     path: '/profile',
     component: UserSection,
     exact: true,
-    userLogged: true
+    userLogged: true,
   },
 ];
 

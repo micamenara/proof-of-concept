@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter as Router } from 'react-router-dom';
 import Auth0ProviderWithHistory from './components/Auth0ProviderWithHistory';
 
 ReactDOM.render(
@@ -15,4 +15,3 @@ ReactDOM.render(
   document.getElementById('root'),
 );
 serviceWorker.unregister();
-

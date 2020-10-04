@@ -4,6 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import { Theme } from '../../styles/Theme';
 import Profile from './index';
 import { Testing } from '../../constants';
+import { BrowserRouter } from 'react-router-dom';
 
 describe('Profile component', () => {
   test('renders Profile', () => {
@@ -12,9 +13,11 @@ describe('Profile component', () => {
       picture: Testing.imageUrl,
     };
     render(
-      <ThemeProvider theme={Theme}>
-        <Profile user={user} />
-      </ThemeProvider>,
+      <BrowserRouter>
+        <ThemeProvider theme={Theme}>
+          <Profile user={user} />
+        </ThemeProvider>
+      </BrowserRouter>,
     );
   });
 });

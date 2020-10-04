@@ -15,6 +15,7 @@ import Itrash from './Itrash';
 import Iupload from './Iupload';
 import Ilink from './link';
 import IcloudComputing from './IcloudComputing';
+import Icancel from './Icancel';
 
 describe('Icons component', () => {
   test('renders Icons', () => {
@@ -38,6 +39,7 @@ describe('Icons component', () => {
         <Itrash {...props} />
         <Iupload {...props} />
         <Ilink {...props} />
+        <Icancel {...props} />
       </ThemeProvider>,
     );
   });

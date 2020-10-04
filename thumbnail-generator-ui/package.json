@@ -53,7 +53,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn fix"
+      "pre-commit": "yarn test:coverage && yarn fix"
     }
   },
   "jest": {

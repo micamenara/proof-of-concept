@@ -12,7 +12,8 @@ export const Text = {
     fromUrl: 'From URL',
     dragImages: 'Drag and drop image here...',
     getUrlImage: 'Done',
-    errorMessage: 'There was a problem with your file. Allowed types: jpeg & png. File max size 5mb.'
+    errorMessage:
+      'There was a problem with your file. Allowed types: jpeg & png. File max size 5mb.',
   },
   generateThumbnail: {
     return: 'Return',

@@ -54,7 +54,10 @@ export default function UploadFile({ onFile }) {
   return (
     <UploadSection>
       <Actions>
-        <FileButton accept={imageSettings.allowedTypes.join(',')} onChange={(e) => handleFile(e.target.files[0])}>
+        <FileButton
+          accept={imageSettings.allowedTypes.join(',')}
+          onChange={(e) => handleFile(e.target.files[0])}
+        >
           {Text.uploadFile.upload}
         </FileButton>
         <Button onClick={() => setShowInput(true)} variant='outline'>
