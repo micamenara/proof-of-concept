@@ -4,6 +4,7 @@ import { Text } from '../../constants';
 import Button from '../Button';
 import FileButton from '../FileButton';
 import IcloudComputing from '../Icons/IcloudComputing';
+import Iimage from '../Icons/Iimage';
 import Ilink from '../Icons/link';
 import Input from '../Input';
 
@@ -75,7 +76,10 @@ export default function UploadFile({ onFile }) {
             <IcloudComputing fill={theme.colors.primary} height='70px' />
           </Icon>
         ) : (
-          <p>{Text.uploadFile.dragImages}</p>
+          <DragImage>
+            <Iimage fill={theme.colors.gray1} height='70px' />
+            <p>{Text.uploadFile.dragImages}</p>
+          </DragImage>
         )}
       </DragZone>
     </UploadSection>
@@ -99,9 +103,7 @@ const DragZone = styled.div`
   cursor: pointer;
   border: 2px dashed ${({ theme }) => theme.colors.gray4};
   border-radius: ${({ theme }) => theme.borderRadius.lg};
-  > p {
-    color: ${({ theme }) => theme.colors.gray1};
-  }
+
   ${({ theme }) => css`
     @media (max-width: ${theme.breakpoint.md}) {
       display: none;
@@ -153,3 +155,11 @@ const Icon = styled.div`
   background-color: ${({ theme }) => theme.colors.primaryLight};
   animation: ${backgroundColorAnimation} 2s infinite linear;
 `;
+
+const DragImage = styled.div`
+  display: flex;
+  flex-direction: column;
+  > p {
+    color: ${({ theme }) => theme.colors.gray1};
+  }
+`

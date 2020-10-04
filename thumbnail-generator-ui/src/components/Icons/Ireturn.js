@@ -38,4 +38,4 @@ export default function Ireturn(props) {
       <g></g>
     </svg>
   );
-};
+}

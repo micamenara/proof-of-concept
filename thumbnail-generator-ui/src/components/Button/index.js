@@ -21,13 +21,15 @@ const StyledButton = styled.button`
   outline: 0px;
   transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms;
 
-  /* Primary */
+  /* Disabled */
   ${({ disabled }) =>
-    disabled && css`
+    disabled &&
+    css`
       opacity: 0.5;
       pointer-events: none;
       cursor: auto;
     `}
+
   /* Primary */
   ${({ theme, variant }) =>
     variant === 'primary' &&
@@ -43,6 +45,7 @@ const StyledButton = styled.button`
           0px 3px 14px 2px rgba(0, 0, 0, 0.12);
       }
     `}
+
   /* Outline */
   ${({ theme, variant }) =>
     variant === 'outline' &&

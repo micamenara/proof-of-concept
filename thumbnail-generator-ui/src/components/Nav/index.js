@@ -1,14 +1,35 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import styled, { useTheme, css } from 'styled-components';
 import { Text } from '../../constants';
 import Icloud from '../Icons/Icloud';
 import Imenu from '../Icons/Imenu';
 import Isettings from '../Icons/Isettings';
+import LoginButton from '../LoginButton';
+import LogoutButton from '../LogoutButton';
+import Profile from '../Profile';
 import Iimage from './../Icons/Iimage';
+import { useAuth0 } from '@auth0/auth0-react';
 
 export default function Nav() {
   const theme = useTheme();
   const [opened, setOpened] = useState(false);
+  const ref = useRef(null);
+  const { user, isAuthenticated } = useAuth0();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        setOpened(false);
+      }
+    };
+    // Bind the event listener
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [ref]);
+
   const navItems = [
     {
       icon: Iimage,
@@ -24,7 +45,7 @@ export default function Nav() {
   return (
     <StyledNav>
       <SiteName>
-        <Menu>
+        <Menu onClick={() => setOpened(!opened)}>
           <Imenu height='24px' width='24px' fill={theme.colors.black} />
         </Menu>
         <SiteLogo>
@@ -32,14 +53,31 @@ export default function Nav() {
           <Icloud height='32px' fill={theme.colors.white} />
         </SiteLogo>
       </SiteName>
-      <NavList opened={opened}>
-        {navItems.map((item) => (
-          <li key={item.label} className={item.selected ? 'current' : ''}>
-            {getIcon(item.icon)}
-            {item.label}
-          </li>
-        ))}
-      </NavList>
+
+      <NavContent opened={opened} ref={ref}>
+        <NavList>
+          {navItems.map((item) => (
+            <li key={item.label} className={item.selected ? 'current' : ''}>
+              {getIcon(item.icon)}
+              {item.label}
+            </li>
+          ))}
+        </NavList>
+
+        <Account>
+          {isAuthenticated ? (
+            <UserData>
+              <Profile user={user} />
+              <LogoutButton />
+            </UserData>
+          ) : (
+            <NoUser>
+              <LoginButton>Log in</LoginButton>
+              <LoginButton variant='outline'>Sing Up</LoginButton>
+            </NoUser>
+          )}
+        </Account>
+      </NavContent>
     </StyledNav>
   );
 }
@@ -50,6 +88,8 @@ const StyledNav = styled.div`
   width: ${({ theme }) => theme.sizes.navWidth};
   background: white;
   height: calc(100vh - ${({ theme }) => theme.sizes.footerHeight});
+  display: flex;
+  flex-direction: column;
 
   ${({ theme }) => css`
     @media (max-width: ${theme.breakpoint.md}) {
@@ -82,11 +122,6 @@ const NavList = styled.ul`
   > li > svg {
     padding-right: ${({ theme }) => theme.spacing.md};
   }
-  ${({ theme, opened }) => css`
-    @media (max-width: ${theme.breakpoint.md}) {
-      display: ${opened ? 'block' : 'none'};
-    }
-  `};
 `;
 
 const SiteName = styled.div`
@@ -120,4 +155,37 @@ const Menu = styled.a`
       display: flex;
     }
   `};
+`;
+
+const NavContent = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  ${({ theme, opened }) => css`
+    @media (max-width: ${theme.breakpoint.md}) {
+      display: ${opened ? 'block' : 'none'};
+    }
+  `};
+`;
+
+const Account = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: flex-end;
+`;
+
+const UserData = styled.div`
+  padding: ${({ theme }) => theme.spacing.sm};
+  display: flex;
+  flex-direction: column;
+  > button {
+    margin: ${({ theme }) => theme.spacing.lg} 0px;
+  }
+`;
+
+const NoUser = styled.div`
+  padding: ${({ theme }) => theme.spacing.sm};
+  display: flex;
+  flex-direction: column;
 `;

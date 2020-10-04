@@ -2,13 +2,7 @@ import React from 'react';
 
 export default function Isad(props) {
   return (
-    <svg
-      xmlns='http://www.w3.org/2000/svg'
-      x='0px'
-      y='0px'
-			viewBox='0 0 368 368'
-			{...props}
-    >
+    <svg xmlns='http://www.w3.org/2000/svg' x='0px' y='0px' viewBox='0 0 368 368' {...props}>
       <g>
         <g>
           <g>

@@ -7,6 +7,7 @@ export const Theme = {
     gray2: '#333333',
     gray3: '#988dab21',
     gray4: '#cccccc',
+    gray5: '#e8e8e8',
     white: '#ffffff',
     success: '#4CAF50',
     successLight: '#4caf502e',
@@ -19,7 +20,7 @@ export const Theme = {
   },
   icons: {
     sm: '16px',
-    lg: '64px'
+    lg: '64px',
   },
   spacing: {
     sm: '8px',
