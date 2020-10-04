@@ -65,7 +65,12 @@ export default function GenerateThumbnail({ file, onReturn }) {
           <Images>
             {ImageSizes.map((item, idx) => (
               <ImageData key={idx}>
-                <img alt={`thumbnail-${item.label}`} src={croppedFile} width={item.width} height={item.height} />
+                <img
+                  alt={`thumbnail-${item.label}`}
+                  src={croppedFile}
+                  width={item.width}
+                  height={item.height}
+                />
                 <p>{item.label}</p>
                 <Button onClick={() => handleImage(item.width, item.height)} type='button'>
                   <Idownload fill={theme.colors.white} width={theme.icons.sm} />
@@ -80,9 +85,7 @@ export default function GenerateThumbnail({ file, onReturn }) {
               <div className='note-content'>
                 <h4>Images successfully generated!</h4>
                 <div className='note-content__subtitle'>
-                  <p>
-                    Thank you for using Thumbnail, to continue editing a new image click here.
-                  </p>
+                  <p>Thank you for using Thumbnail, to continue editing a new image click here.</p>
                   <Button onClick={() => onReturn()} variant='outlineSecondary'>
                     New image
                   </Button>

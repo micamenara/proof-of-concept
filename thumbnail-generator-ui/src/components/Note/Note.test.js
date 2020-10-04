@@ -8,12 +8,8 @@ describe('Note component', () => {
   test('renders Note', () => {
     render(
       <ThemeProvider theme={Theme}>
-        <Note variant='success'>
-          Success note
-        </Note>
-        <Note variant='error'>
-          Error note
-        </Note>
+        <Note variant='success'>Success note</Note>
+        <Note variant='error'>Error note</Note>
       </ThemeProvider>,
     );
   });
