@@ -6,7 +6,7 @@ export const Text = {
     images: 'Images',
     user: 'My account',
     logIn: 'Log in',
-    signUp: 'Sign Up'
+    signUp: 'Sign Up',
   },
   uploadFile: {
     clear: 'Clear',
