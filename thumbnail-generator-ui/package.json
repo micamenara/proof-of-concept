@@ -63,7 +63,7 @@
       "!**/coverage/**",
       "!**/serviceWorker.js",
       "!**/index.js",
-      "!**/Utils/**"
+      "!**/utils/**"
     ]
   }
 }

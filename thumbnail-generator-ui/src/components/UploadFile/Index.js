@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styled, { useTheme, keyframes, css } from 'styled-components';
 import { imageSettings, Text } from '../../constants';
-import validateImage from '../../Utils/validateImage';
+import validateImage from '../../utils/validateImage';
 import Button from '../Button';
 import FileButton from '../FileButton';
 import IcloudComputing from '../Icons/IcloudComputing';

@@ -1,4 +1,4 @@
-import resizeImg from '../Utils/resizeImage';
+import resizeImg from '../utils/resizeImage';
 
 export default function getResizedImage(img, width, height) {
   return new Promise((resolve, reject) => {
