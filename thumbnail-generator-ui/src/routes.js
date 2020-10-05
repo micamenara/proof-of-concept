@@ -6,13 +6,11 @@ const routes = [
     path: '/',
     component: FilesSection,
     exact: true,
-    userLogged: false,
   },
   {
     path: '/profile',
     component: UserSection,
     exact: true,
-    userLogged: true,
   },
 ];
 

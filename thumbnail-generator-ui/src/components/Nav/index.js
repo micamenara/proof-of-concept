@@ -25,10 +25,8 @@ export default function Nav() {
         setOpened(false);
       }
     };
-    // Bind the event listener
     document.addEventListener('mousedown', handleClickOutside);
     return () => {
-      // Unbind the event listener on clean up
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [ref]);
@@ -85,8 +83,8 @@ export default function Nav() {
             </UserData>
           ) : (
             <NoUser>
-              <LoginButton>Log in</LoginButton>
-              <LoginButton variant='outline'>Sing Up</LoginButton>
+              <LoginButton>{Text.nav.logIn}</LoginButton>
+              <LoginButton variant='outline'>{Text.nav.signUp}</LoginButton>
             </NoUser>
           )}
         </Account>

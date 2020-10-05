@@ -5,6 +5,8 @@ export const Text = {
   nav: {
     images: 'Images',
     user: 'My account',
+    logIn: 'Log in',
+    signUp: 'Sign Up'
   },
   uploadFile: {
     clear: 'Clear',
