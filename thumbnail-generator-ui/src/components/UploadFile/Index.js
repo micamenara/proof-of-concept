@@ -13,7 +13,7 @@ export default function UploadFile({ onFile }) {
   const [isDragging, setIsDragging] = useState('');
   const [showInput, setShowInput] = useState(false);
   const [inputValue, setInputValue] = useState('');
-  const [showError, setShowError] = useState('');
+  const [showError, setShowError] = useState(false);
   const theme = useTheme();
 
   const handleFile = (file) => {
@@ -21,7 +21,7 @@ export default function UploadFile({ onFile }) {
     if (isValid) {
       setInputValue('');
       onFile(file);
-      setShowError(false);
+      showError && setShowError(false);
     } else {
       setShowError(true);
     }
@@ -44,15 +44,20 @@ export default function UploadFile({ onFile }) {
   };
 
   const getImageFromURL = (url) => {
-    fetch(url)
+    return fetch(url)
       .then((res) => res.blob())
       .then((blob) => {
         handleFile(blob);
-      });
+      })
+      .catch((err) => console.error(err));
   };
 
   return (
     <UploadSection>
+      <MobileImage>
+        <Iimage fill={theme.colors.gray1} height='70px' />
+        <p>{Text.uploadFile.uploadImagesHere}</p>
+      </MobileImage>
       <Actions>
         <FileButton
           accept={imageSettings.allowedTypes.join(',')}
@@ -60,10 +65,10 @@ export default function UploadFile({ onFile }) {
         >
           {Text.uploadFile.upload}
         </FileButton>
-        <Button onClick={() => setShowInput(true)} variant='outline'>
+        <StyledButton onClick={() => setShowInput(true)} variant='outline'>
           <Ilink fill={theme.colors.primary} width={theme.icons.sm} />
           {Text.uploadFile.fromUrl}
-        </Button>
+        </StyledButton>
       </Actions>
       {showInput && (
         <FromUrlSection>
@@ -179,4 +184,29 @@ const DragImage = styled.div`
 
 const Error = styled.label`
   color: ${({ theme }) => theme.colors.error};
+`;
+
+const StyledButton = styled(Button)`
+  margin-left: ${({ theme }) => theme.spacing.md};
+  ${({ theme }) => css`
+    @media (max-width: ${theme.breakpoint.md}) {
+      margin: 0px;
+    }
+  `}
+`;
+
+const MobileImage = styled.div`
+  display: none;
+  ${({ theme }) => css`
+    @media (max-width: ${theme.breakpoint.md}) {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+  `}
+  > p {
+    color: ${({ theme }) => theme.colors.gray1};
+    margin-bottom: ${({ theme }) => theme.spacing.lg};
+  }
 `;

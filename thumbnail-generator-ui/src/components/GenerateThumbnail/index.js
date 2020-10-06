@@ -11,21 +11,27 @@ import Note from '../Note';
 import { Text, ImageSizes } from '../../constants';
 import getResizedImage from '../../api/getResizedImage';
 import Idownload from '../Icons/Idownload';
+import Loader from '../Loader';
 
 export default function GenerateThumbnail({ file, onReturn }) {
   const [fileUrl, setFileUrl] = useState(null);
   const [cropper, setCropper] = useState(null);
   const [hasError, setHasError] = useState(false);
   const [croppedFile, setCroppedFile] = useState('');
+  const [loading, setLoading] = useState(false);
   const cropperRef = useRef(null);
   const theme = useTheme();
 
   useEffect(() => {
     if (file) {
+      setLoading(true);
       const img = new Image();
       img.src = URL.createObjectURL(file);
       getResizedImage(img, 800, 600)
-        .then((data) => setFileUrl(data))
+        .then((data) => {
+          setFileUrl(data);
+          setLoading(false);
+        })
         .catch(() => {
           setHasError(true);
         });
@@ -59,7 +65,7 @@ export default function GenerateThumbnail({ file, onReturn }) {
   };
 
   return file && !hasError ? (
-    <Section>
+    <Section isLoading={loading}>
       {croppedFile && (
         <>
           <Images>
@@ -117,6 +123,7 @@ export default function GenerateThumbnail({ file, onReturn }) {
           </Actions>
         </>
       )}
+      {loading && <Loader size='100px' />}
     </Section>
   ) : hasError ? (
     <Section>
@@ -141,6 +148,13 @@ export default function GenerateThumbnail({ file, onReturn }) {
 const Section = styled.div`
   padding: ${({ theme }) => theme.spacing.md};
   flex: 1;
+  ${({ isLoading }) =>
+    isLoading &&
+    css`
+      justify-content: center;
+      align-items: center;
+      display: flex;
+    `}
 `;
 
 const Actions = styled.div`

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect } from 'react';
-import styled, { useTheme, css } from 'styled-components';
+import styled, { useTheme, css, keyframes } from 'styled-components';
 import { Text } from '../../constants';
 import Icloud from '../Icons/Icloud';
 import Imenu from '../Icons/Imenu';
@@ -17,7 +17,7 @@ export default function Nav() {
   const [opened, setOpened] = useState(false);
   const ref = useRef(null);
   const location = useLocation().pathname;
-  const { user, isAuthenticated } = useAuth0();
+  const { user, isAuthenticated, isLoading } = useAuth0();
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -74,9 +74,14 @@ export default function Nav() {
               ),
           )}
         </NavList>
-
         <Account onClick={() => setOpened(false)}>
-          {isAuthenticated ? (
+          {isLoading ? (
+            <LoadingData>
+              <Loading width='50%' />
+              <Loading width='100%' />
+              <Loading width='100%' />
+            </LoadingData>
+          ) : isAuthenticated ? (
             <UserData>
               <Profile user={user} />
               <LogoutButton />
@@ -216,4 +221,30 @@ const NoUser = styled.div`
   padding: ${({ theme }) => theme.spacing.sm};
   display: flex;
   flex-direction: column;
+`;
+
+const gradientBackground = keyframes`
+  0% {
+    opacity: 0.5;
+  }
+  50%  {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0.5;
+  }
+`;
+
+const Loading = styled.div`
+  height: 18px;
+  width: ${({ width }) => width};
+  background-color: ${({ theme }) => theme.colors.gray5};
+  animation: ${gradientBackground} 2s ease-in-out 0s infinite reverse;
+`;
+
+const LoadingData = styled.div`
+  padding: ${({ theme }) => theme.spacing.md};
+  > div {
+    margin-bottom: ${({ theme }) => theme.spacing.sm};
+  }
 `;
